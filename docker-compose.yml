@@ -19,7 +19,7 @@ services:
 
     nginx:
         container_name: mage_websrv
-        image: nginx:1.14.2
+        image: nginx:1.14.2-alpine
         ports:
             - 80:80
         volumes:
@@ -33,7 +33,6 @@ services:
         restart: always
         networks:
             - magenet_internal
-            - magenet_external
 
     mysql:
         container_name: mage_mysql
@@ -51,8 +50,15 @@ services:
         networks:
             - magenet_internal
 
+    redis:
+        container_name: mage_redis
+        image: redis:3.2.10-alpine
+        ports:
+            - 6379:6379
+        restart: always
+        networks:
+            - magenet_internal
+
 networks:
-    magenet_external:
-        driver: bridge
     magenet_internal:
         driver: bridge
